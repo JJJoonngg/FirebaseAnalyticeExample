@@ -28,13 +28,14 @@ class FirebaseService : Service() {
     override fun onCreate() {
         super.onCreate()
         context = this
-        timerForTutorial = timer(period = Constant.MILLSTIME * 600 * 1L) {
+        //1second * seconds * minutes * hours
+        timerForTutorial = timer(period = Constant.MILLSTIME * 60 * 60 * 1L) {
             FirebaseAnalyticsManager(Constant.TYPE_TUTORIAL, context)
         }
-        timerForLogin = timer(period = Constant.MILLSTIME * 600 * 2L) {
+        timerForLogin = timer(period = Constant.MILLSTIME * 60 * 60 * 2L) {
             FirebaseAnalyticsManager(Constant.TYPE_LOGIN, context)
         }
-        timerForSignUp = timer(period = Constant.MILLSTIME * 600 * 3L) {
+        timerForSignUp = timer(period = Constant.MILLSTIME * 60 * 60 * 3L) {
             FirebaseAnalyticsManager(Constant.TYPE_SIGN_UP, context)
         }
     }
