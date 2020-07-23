@@ -18,6 +18,7 @@ gradlew.*
 gradlew
 gradle/
 gradle.*
+app/google-services.json
 
 # Created by https://www.gitignore.io/api/java,macos,gradle,android
 # Edit at https://www.gitignore.io/?templates=java,macos,gradle,android
