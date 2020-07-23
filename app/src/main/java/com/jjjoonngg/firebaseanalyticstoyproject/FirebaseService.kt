@@ -2,9 +2,12 @@ package com.jjjoonngg.firebaseanalyticstoyproject
 
 import android.app.Service
 import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import android.os.IBinder
 import android.util.Log
+import com.google.firebase.analytics.FirebaseAnalytics
 import java.util.*
 import kotlin.concurrent.timer
 import kotlin.concurrent.timerTask
@@ -12,7 +15,10 @@ import kotlin.concurrent.timerTask
 class FirebaseService : Service() {
 
     private var flag = false
-    private lateinit var timerTask : Timer
+    private lateinit var timerForLogin: Timer
+    private lateinit var timerForSignUp: Timer
+    private lateinit var timerForTutorial: Timer
+    private lateinit var context: Context
 
     override fun onBind(intent: Intent): IBinder {
         TODO("Return the communication channel to the service.")
@@ -21,15 +27,23 @@ class FirebaseService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-        var i = 0
-        timerTask = timer(period = 100) {
-            Log.d("TAG", "" + i++)
+        context = this
+        timerForTutorial = timer(period = Constant.MILLSTIME * 600 * 1L) {
+            FirebaseAnalyticsManager(Constant.TYPE_TUTORIAL, context)
+        }
+        timerForLogin = timer(period = Constant.MILLSTIME * 600 * 2L) {
+            FirebaseAnalyticsManager(Constant.TYPE_LOGIN, context)
+        }
+        timerForSignUp = timer(period = Constant.MILLSTIME * 600 * 3L) {
+            FirebaseAnalyticsManager(Constant.TYPE_SIGN_UP, context)
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        timerTask.cancel()
+        timerForLogin.cancel()
+        timerForSignUp.cancel()
+        timerForTutorial.cancel()
     }
 
 }
